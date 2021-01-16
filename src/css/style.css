@@ -756,16 +756,20 @@ label {
     font-size: 80%;
 }
 
-.new-items__body {
+.new-items__body, .rec__body, .sale__body, .shares__body {
     position: relative;;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
 
-    overflow: hidden;
+    width: 91%;
+    /*overflow: hidden;*/
     padding-top: 5px;
     max-height: 394px;
     margin-top: 50px;
+
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .new-slider {
@@ -779,10 +783,27 @@ label {
 .n-img {
     position: absolute;
     margin: auto;
-    left: 0;
+    left: -40px;
     top: 50%;
     display: block;
     cursor: pointer;
+    background-color: transparent;
+    z-index: 5;
+}
+
+.n-img:hover {
+    cursor: pointer;
+    opacity: .8;
+}
+.n-img2:hover {
+    cursor: pointer;
+    opacity: .8;
+}
+@media only screen and (max-width: 480px){
+    .new-items__body, .rec__body, .sale__body, .shares__body{
+        width: 255px;
+        padding: 10px;
+    }
 }
 
 .carousel-item {
@@ -838,12 +859,23 @@ label {
 
     z-index: 1;
 }
-
+.carousel-item:hover {
+    border: #ff5816 1px solid;
+    cursor: pointer;
+}
+.buy-button:hover {
+    background: #4673ab;
+    background-size: 20px,17px;
+}
 
 .item {
     padding: 20px 10px;
     color: #4673ab;
     font-weight: bold;
+}
+
+.item:hover {
+    color: #ff5816;
 }
 
 .buy-p {
@@ -924,16 +956,31 @@ label {
         display: none;
     }
 
-    .newArrow {
-        display: inline;
+    .news-arrow {
+        display: inline-flex;
+        justify-content: center;
         color: #ff5816;
+
+        align-items: center;
+
+        font-weight: 900;
         background: white;
         height: 20px;
         width: 20px;
         border-radius: 50%;
         border: 1px solid #bdc3c5;
-
+        position: absolute;
+        top: -15%;
     }
+
+    .prev {
+        right: 0;
+    }
+
+    .next {
+        right: -30px;
+    }
+
 
     .new-button {
         display: inline;
@@ -976,18 +1023,6 @@ label {
     padding: 0 0 0 10px;
     color: #4673ab;
     font-size: 80%;
-}
-
-.rec__body {
-    position: relative;;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-
-    overflow: hidden;
-    padding-top: 5px;
-    max-height: 394px;
-    margin-top: 50px;
 }
 
 .carousel-rec {
@@ -1040,6 +1075,10 @@ label {
     top: 17px;
     left: 22px;
 }
+.carousel-rec:hover {
+    border: #ff5816 1px solid;
+    cursor: pointer;
+}
 
 /*sale*/
 
@@ -1072,19 +1111,6 @@ label {
     padding: 0 0 0 10px;
     color: #4673ab;
     font-size: 80%;
-}
-
-.sale__body {
-    position: relative;;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-
-    overflow: hidden;
-    padding-top: 5px;
-
-    max-height: 394px;
-    margin-top: 50px;
 }
 
 .carousel-sale {
@@ -1137,6 +1163,10 @@ label {
     top: 17px;
     left: 22px;
 }
+.carousel-sale:hover {
+    border: #ff5816 1px solid;
+    cursor: pointer;
+}
 
 /*shares*/
 .shares-items {
@@ -1168,19 +1198,6 @@ label {
     padding: 0 0 0 10px;
     color: #4673ab;
     font-size: 80%;
-}
-
-.shares__body {
-    position: relative;;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-
-    overflow: hidden;
-    padding-top: 5px;
-
-    max-height: 394px;
-    margin-top: 50px;
 }
 
 .carousel-shares {
@@ -1252,6 +1269,10 @@ label {
     justify-content: space-between;
 }
 
+.carousel-shares:hover {
+    border: #ff5816 1px solid;
+    cursor: pointer;
+}
 
 /*RangeMenu*/
 
@@ -2075,11 +2096,11 @@ footer {
 .n-img2 {
     position: absolute;
     margin: auto;
-    right: 0;
+    right: -40px;
     top: 50%;
     display: block;
-
-
+    z-index: 5;
+    background-color: transparent;
     cursor: pointer;
 }
 
