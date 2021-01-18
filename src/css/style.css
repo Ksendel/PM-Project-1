@@ -56,6 +56,45 @@ html, body {
     color: #ff5816;
 }
 
+.menu-list li .menu__link:hover {
+    color: #ff5816;
+    transition-duration: 0.5s;
+}
+
+.submenu {
+    position: absolute;
+    top: 100%;
+    width: 200px;
+    z-index: 10;
+    border-bottom: #c44411 2px solid;
+    padding: 5px;
+
+    list-style: none;
+    -webkit-transition: 0.5s ease-in-out;
+    -moz-transition: 0.5s ease-in-out;
+    -o-transition: 0.5s ease-in-out;
+    transition: 0.5s ease-in-out;
+
+    display: none;
+    background: #040d0d;
+}
+
+.submenu * a {
+    color: #bdc3c5;
+    text-decoration: none;
+    font-size: 85%;
+}
+
+.submenu * a:hover {
+    transition: 0.5s;
+    color: #c44411;
+}
+
+.menu__body ul li:hover .submenu {
+
+    display: block;
+}
+
 .burger-menu__wrapper {
     display: none;
 }
@@ -88,7 +127,7 @@ label {
     margin: 0 40px 0 0;
     font-size: 26px;
     line-height: 70px;
-    display: none;
+    /*display: none;*/
     width: 26px;
     float: right;
 }
@@ -756,6 +795,9 @@ label {
     font-size: 80%;
 }
 
+.new-all-icon {
+    display: none;
+}
 .new-items__body, .rec__body, .sale__body, .shares__body {
     position: relative;;
     display: flex;
@@ -1628,6 +1670,7 @@ label {
     justify-content: space-between;
     list-style: none;
     margin: 50px 0;
+    overflow: hidden;
     align-items: center;
 }
 
@@ -2227,15 +2270,18 @@ footer {
         width: 1140px;
         margin: 20px;
     }
+    .new-items__header, .rec__header, .sale__header, .shares__header{
+        justify-content: left;
+    }
 }
 @media only screen and (max-width: 980px) {
     .news {
         position: relative;
     }
     .news__banner-box {
-        position: absolute;
+
         width: 50%;
-        right: 200px;
+
     }
     .hdr__bottom-search {
         display: none;
@@ -2252,5 +2298,14 @@ footer {
 @media only screen and (max-width: 1139px) {
     .assortmentMenu__body {
         display: none;
+    }
+
+    .new-all, .rec-all, .sale-all, .shares-all  {
+        display: none;
+    }
+
+    .new-all-icon {
+        display: block;
+        margin-left: -19px;
     }
 }

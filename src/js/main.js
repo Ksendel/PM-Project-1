@@ -1,3 +1,15 @@
+$(document).ready(function()
+{
+    $(".backup_picture").on("error", function(){
+        $(this).attr('src', 'images/news3.png');
+    });
+});
+$(document).ready(function()
+{
+    $(".backup_picture2").on("error", function(){
+        $(this).attr('src', 'images/slider_img1.jpg');
+    });
+});
 $(function () {
 
     $('.banner-box__slider').slick({
@@ -10,11 +22,13 @@ $(function () {
 
 });
 
+let menuLength = conf.menu.length
 $(function () {
     $('.assortmentMenu-list').slick({
         infinite: false,
         dots: false,
-        slidesToShow: 10,
+
+        slidesToShow: menuLength - 1,
         slidesToScroll: 1,
         prevArrow: '<div class="rm-arr first"></div>',
         nextArrow: '<div class="rm-arr second"></div>'
