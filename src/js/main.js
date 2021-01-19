@@ -16,6 +16,13 @@ $(document).ready(function()
         $(this).attr('src', 'images/newItems-page3.png');
     });
 });
+$(document).ready(function()
+{
+    $(".backup_picture__promotions").on("error", function(){
+        $(this).attr('src', 'images/sale-page1.png');
+    });
+});
+
 $(function () {
 
     $('.banner-box__slider').slick({
