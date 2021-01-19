@@ -6,8 +6,14 @@ $(document).ready(function()
 });
 $(document).ready(function()
 {
-    $(".backup_picture2").on("error", function(){
+    $(".backup_picture__slider").on("error", function(){
         $(this).attr('src', 'images/slider_img1.jpg');
+    });
+});
+$(document).ready(function()
+{
+    $(".backup_picture__items").on("error", function(){
+        $(this).attr('src', 'images/newItems-page3.png');
     });
 });
 $(function () {
@@ -42,7 +48,6 @@ $(function () {
         slidesToShow: 4,
         variableWidth: true,
         slidesToScroll: 1,
-
 
         responsive: [
             {

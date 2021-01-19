@@ -133,6 +133,16 @@ const ITEMS = [
         url: 'new_items/item.html'
     },
     {
+        type: 'recommended',
+        description: 'Iphone 20',
+        img: 'https://same_url.jpg',
+        price: '2000',
+        oldPrice: '1100',
+        currency: 'RUB',
+        date: '2020/12/24',
+        url: 'new_items/item.html'
+    },
+    {
         type: 'sale',
         description: 'IP телефон Siemens Gigaset C530A IP',
         img: 'https://same_url.jpg',

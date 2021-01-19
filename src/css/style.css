@@ -1284,13 +1284,34 @@ label {
 
     padding: 10px 10px;
     font-size: 13px;
-
+    align-items: center;
     display: flex;
     justify-content: space-around;
 }
-
 .timer-sh {
     display: flex;
+    text-align: center;
+    margin-top: 8px;
+
+    color: #989da0;
+}
+
+.days > span, .hours > span, .minutes > span {
+    padding: 4px 3px;
+    color: #dbdee6;
+    background-color: #262626;
+
+    border-radius: 2px;
+    font-size: 16px;
+}
+
+.timer-sh p {
+    margin-top: 5px;
+}
+
+.timer-sh > p {
+    margin-top: 0;
+    font-size: 80%;
 }
 
 .t-sh {

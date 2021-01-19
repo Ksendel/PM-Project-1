@@ -22,11 +22,8 @@ $(function () {
         </div>
     `
     let topMenuLength = Object.keys(conf.topMenu).length
-    let amountMenu = Math.min(9, topMenuLength)
-
     const menuList = document.querySelector('.menu-list')
 
-    // for (let i = 0; i < amountMenu; i++) {
     const topMenuItem = order => `top-menu-item-${order}`
     const topMenuTitle = (menuConf) => `
                 <a href="${menuConf.url || ""}" class="menu__link">
@@ -51,14 +48,14 @@ $(function () {
     })
 
     //TOP_MENU - SUBMENU *
-    for (const [submenuItem, submenuConf] of Object.entries(conf.topMenu)) {
+    for (const [_, submenuConf] of Object.entries(conf.topMenu)) {
 
         let submenu = ""
         if (submenuConf.submenu) {
             const submenuItem = submenuConf.submenu
                 .sort((a, b) => a.order - b.order)
                 .map(menuItem => `<li><a href="${menuItem.url}">${menuItem.title}</a></li>`)
-                .reduce((a,b) => a + b)
+                .reduce((a, b) => a + b)
 
             submenu += `<ul class="submenu">${submenuItem}</ul>`
         }
@@ -69,14 +66,16 @@ $(function () {
 
     //BASKET *
     const basketClass = document.querySelector('.hdr__bottom-basket')
-    // const money = conf.currency === 'UAH' ? 'грн.' : 'р.'
     let currency = ""
     switch (conf.currency) {
-        case "UAH": currency = 'грн.'
+        case "UAH":
+            currency = 'грн.'
             break
-        case "RUB": currency = 'р.'
+        case "RUB":
+            currency = 'р.'
             break
-        default: currency = "у.e."
+        default:
+            currency = "у.e."
     }
 
     basketClass.innerHTML += ` 
@@ -93,7 +92,7 @@ $(function () {
 
     //TOP_MENU - BURGER MENU *
     const burgerMenuList = document.querySelector('.burger-menu')
-    for (const [menuItem, menuConf] of Object.entries(conf.topMenu)) {
+    for (const [_, menuConf] of Object.entries(conf.topMenu)) {
         burgerMenuList.innerHTML += `
         <li><a href="${menuConf.url}">
             ${menuConf.title}
@@ -104,28 +103,33 @@ $(function () {
 
     // MENU *
     const rangeMenuList = document.querySelector('.assortmentMenu-list')
-    for (const [menuItem, menuConf] of Object.entries(conf.menu)) {
-        rangeMenuList.innerHTML += `
-        <li class="assortmentMenu-list-item">
-                <div>${menuConf.title}</div>
-        </li>
-    `
-    }
+    const maxMenuItemsLength = 10
+    Object.entries(conf.menu).slice(0, maxMenuItemsLength).forEach(entry => {
+        const [_, menuEl] = entry
+        if (menuEl.title && menuEl.url) {
+            rangeMenuList.innerHTML += `
+             <li class="assortmentMenu-list-item">
+                <div>${menuEl.title}</div>
+             </li>
+            `
+        }
+    })
 
     // NEWS *
     const newsList = document.querySelector('.news-list')
     let newsRandom = shuffle(conf.news)
     const month = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь']
-    for (const [menuItem, menuConf] of Object.entries(newsRandom)) {
-        let date = menuConf.date.slice(-2)
-        let monthNum = Number(menuConf.date.slice(5, 7))
+    for (const [_, menuConf] of Object.entries(newsRandom)) {
+        let date = new Date(menuConf.date).getDate()
+        let getMonth = new Date(menuConf.date).getMonth()
+        let monthNum = month[getMonth]
 
         newsList.innerHTML += `
          <li><a href="" class="img">
                     <img src="${menuConf.img}" class="backup_picture" alt="${menuConf.title}" >
                     <div class="news-date">
                         <div>${date}</div>
-                            ${month[monthNum - 1]}
+                            ${monthNum}
                     </div>
                     <div class="news-p">
                         <a href="">${menuConf.title}</a>
@@ -139,16 +143,89 @@ $(function () {
 // BANNER *
     const bannerList = document.querySelector('.banner-box__slider')
 
-    for (const [menuItem, menuConf] of Object.entries(conf.banner)) {
+    for (const [_, menuConf] of Object.entries(conf.banner)) {
         bannerList.innerHTML += `
          <div class="banner-box__slider-item">
-                    <img src="${menuConf.img}" class="backup_picture2" alt="${menuConf.url}" >
+                    <img src="${menuConf.img}" class="backup_picture__slider" alt="${menuConf.url}" >
                     <a class="banner-box__slider-link" href="#">Подробнее</a>
          </div>
     `
     }
 
+// ITEMS *
+    const newsItemsList = document.querySelector('.new-items__body')
+    const recItemsList = document.querySelector('.rec__body')
+    const saleItemsList = document.querySelector('.sale__body')
+
+    conf.items
+        .sort((item1, item2) => {
+            const dateCompared = new Date(item2.date).getTime() - new Date(item1.date).getTime()
+            if (dateCompared === 0) {
+                const priceCompared = item1.price - item2.price
+                if(priceCompared === 0){
+                    return (item1.oldPrice - item1.price) - (item2.oldPrice - item2.price)
+                } else return priceCompared
+            } else return dateCompared
+        })
+
+        .forEach(itemsEl => {
+            if (itemsEl.type === 'new') {
+                newsItemsList.innerHTML += `
+                <div class="carousel-item">
+                    <img src="${itemsEl.img}" class="ni-img backup_picture__items" alt="">
+                        <a href="" class="item">${itemsEl.description}</a>
+                    <div class="buy-p">Цена:
+                        <span class="sale">${itemsEl.price} p.</span>
+                        <span class="price">${itemsEl.oldPrice} р.</span>
+                    </div>
+                        <div class="buy-b">
+                            <div class="buy-button">
+                                <img src="images/buy.png" class="buy-img" alt="">
+                                 Купить
+                             </div>
+                            <a href="" class="buy-a">Подробнее</a>
+                </div>
+            `
+
+            } else if (itemsEl.type === 'recommended') {
+
+                recItemsList.innerHTML += `
+            <div class="carousel-rec">
+                 <img src="${itemsEl.img}" class="ni-img backup_picture__items" alt="">
+                     <a href="" class="item">${itemsEl.description}</a>
+                 <div class="buy-p">Цена:
+                <span class="sale">${itemsEl.price} р.</span>
+                <span class="price">${itemsEl.oldPrice} р.</span></div>
+                <div class="buy-b">
+             <div class="buy-button">
+             <img src="images/buy.png" class="buy-img" alt="">
+                 Купить
+                 </div>
+             <a href="" class="buy-a">Подробнее</a>
+                 </div>
+            `
+            } else if (itemsEl.type === 'sale') {
+                saleItemsList.innerHTML += `
+             <div class="carousel-sale">
+                    <img src="${itemsEl.img}" class="ni-img backup_picture__items" alt="">
+                    <a href="" class="item">${itemsEl.description}</a>
+                    <div class="buy-p">Цена:
+                        <span class="sale">${itemsEl.price} р.</span>
+                        <span class="price">${itemsEl.oldPrice} р.</span></div>
+                    <div class="buy-b">
+                        <div class="buy-button">
+                            <img src="images/buy.png" class="buy-img" alt="">
+                            Купить
+                        </div>
+                        <a href="" class="buy-a">Подробнее</a>
+                    </div>
+                </div>
+            `
+            }
+        })
+
 })
+
 
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
