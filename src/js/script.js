@@ -4,8 +4,8 @@ $(function init() {
     news();
     banner();
     items();
+    buyingRightNow();
     promotions();
-
 })
 
 const conf = {
@@ -17,7 +17,8 @@ const conf = {
     news: NEWS,
     banner: BANNER,
     items: ITEMS,
-    promotions: PROMOTIONS
+    promotions: PROMOTIONS,
+    buyingRightNow: BUYING_RIGHT_NOW
 }
 
 let currency = ""
@@ -267,7 +268,7 @@ function items() {
 }
 
 function buy(price, currency) {
-    console.log('click')
+    alert("Товар добавлен в корзину")
     conf.basket.elements += 1
     conf.basket.price += price
     renderBasket(currency)
@@ -300,15 +301,15 @@ function renderBasket(currency) {
 function promotions() {
     const promotionsItemsList = document.querySelector('.shares__body')
     for (const [_, menuConf] of Object.entries(conf.promotions)) {
+        if (menuConf.time_action) {
+            const periodRegexp = /^([0-9]{1,2})d\s([0-9]{1,2})h\s([0-9]{1,2})m$/
+            const formatDuration = duration => duration.toString().length === 1 ? '0' + duration : duration
+            const [days, hours, minutes] = periodRegexp
+                .exec(menuConf.time_action)
+                .slice(1, 4)
+                .map(formatDuration)
 
-        const periodRegexp = /^([0-9]{1,2})d\s([0-9]{1,2})h\s([0-9]{1,2})m$/
-        const formatDuration = duration => duration.toString().length === 1 ? '0' + duration : duration
-        const [days, hours, minutes] = periodRegexp
-            .exec(menuConf.time_action)
-            .slice(1,4)
-            .map(formatDuration)
-
-        promotionsItemsList.innerHTML += `
+            promotionsItemsList.innerHTML += `
          <div class="carousel-shares">
                         <a href="" class="item-sh">${menuConf.title}</a>
                         <img src="${menuConf.img}" class="ni-img backup_picture__promotions" alt="">
@@ -337,6 +338,43 @@ function promotions() {
                         <a href="" class="buy-a">Подробнее</a>
                     </div>
     `
+        } else {
+            promotionsItemsList.innerHTML += `
+         <div class="carousel-shares">
+                        <a href="" class="item-sh">${menuConf.title}</a>
+                        <img src="${menuConf.img}" class="ni-img backup_picture__promotions" alt="">
+
+                        <div class="sh-p">${menuConf.description}
+                        </div>
+                        <div class="timer__body">
+                            Срок действия:
+                            <div class="timer-sh">
+                                БЕССРОЧНО!
+                            </div>
+                        </div>
+                        <a href="" class="buy-a">Подробнее</a>
+                    </div>
+    `
+        }
     }
 }
 // -----PROMOTIONS END---- //
+
+// -----BUYING_RIGHT_NOW----- //
+function buyingRightNow() {
+
+    const buyingClass = document.querySelector('.buy-now__body')
+    for (const [_, buyConf] of Object.entries(conf.buyingRightNow)) {
+        console.log("buy")
+        buyingClass.innerHTML += `
+        <div class="carousel-buy-now">
+                    <a href="${buyConf.url}" class="buy-now__img">
+                    <img src="${buyConf.img}" class="backup_picture__buy-now" alt="">
+                    </a>
+                    <div class="buy-now__link-item">
+                        <p><a href="" class="buy-now__title">${buyConf.title}</a></p>
+                    </div>
+                </div>
+    `
+    }
+}

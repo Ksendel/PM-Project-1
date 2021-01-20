@@ -22,6 +22,13 @@ $(document).ready(function()
         $(this).attr('src', 'images/sale-page1.png');
     });
 });
+$(document).ready(function()
+{
+    $(".backup_picture__buy-now").on("error", function(){
+        $(this).attr('src', 'images/buy_now2.jpg');
+    });
+});
+
 
 $(function () {
 
